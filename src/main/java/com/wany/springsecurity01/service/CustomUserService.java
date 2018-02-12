@@ -6,11 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service("userDetailsService")
 public class CustomUserService implements UserDetailsService {
 
     @Autowired
-    SysUserRepository sysUserRepository;
+    private SysUserRepository sysUserRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -21,5 +27,11 @@ public class CustomUserService implements UserDetailsService {
         System.out.println("s:"+username);
         System.out.println("username:"+user.getUsername()+";password:"+user.getPassword());
         return user;
+    }
+
+    public void save(SysUser user) {
+        System.out.println(passwordEncoder);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        sysUserRepository.save(user);
     }
 }

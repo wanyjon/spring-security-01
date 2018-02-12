@@ -82,4 +82,14 @@ public class SysUser implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "SysUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }
